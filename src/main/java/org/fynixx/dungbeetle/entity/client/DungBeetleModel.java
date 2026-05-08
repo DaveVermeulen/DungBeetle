@@ -26,15 +26,13 @@ public class DungBeetleModel<T extends DungBeetleEntity> extends HierarchicalMod
 
         PartDefinition Body = partdefinition.addOrReplaceChild("Body", CubeListBuilder.create(), PartPose.offset(0.0F, 24.0F, 0.0F));
 
-        PartDefinition Dung = Body.addOrReplaceChild("Dung", CubeListBuilder.create().texOffs(0, 10).addBox(-3.0F, -6.0F, -3.0F, 6.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition Dung = Body.addOrReplaceChild("Dung", CubeListBuilder.create().texOffs(0, 10).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 6.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -3.0F, 0.0F));
 
-        PartDefinition Beetle = Body.addOrReplaceChild("Beetle", CubeListBuilder.create(), PartPose.offset(0.0F, -4.0F, 4.0F));
+        PartDefinition Beetle = Body.addOrReplaceChild("Beetle", CubeListBuilder.create().texOffs(0, 10).addBox(-1.0F, -1.0F, 3.0F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.0F))
+                .texOffs(-10, 0).addBox(-5.0F, 0.0F, -5.0F, 10.0F, 0.0F, 10.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 22).addBox(-2.0F, -2.0F, -3.0F, 4.0F, 2.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, -4.217F, 4.3135F, -1.0036F, 0.0F, 0.0F));
 
-        PartDefinition cube_r1 = Beetle.addOrReplaceChild("cube_r1", CubeListBuilder.create().texOffs(0, 22).addBox(-2.0F, -2.0F, -8.0F, 4.0F, 2.0F, 6.0F, new CubeDeformation(0.0F))
-                .texOffs(0, 0).addBox(-5.0F, 0.0F, -10.0F, 10.0F, 0.0F, 10.0F, new CubeDeformation(0.0F))
-                .texOffs(20, 22).addBox(-1.0F, -1.0F, -2.0F, 2.0F, 1.0F, 1.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 4.0F, 3.0F, -1.0036F, 0.0F, 0.0F));
-
-        PartDefinition cube_r2 = Beetle.addOrReplaceChild("cube_r2", CubeListBuilder.create().texOffs(0, 0).addBox(-5.0F, 0.0F, -10.0F, 10.0F, 0.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 4.0F, 3.0F, 1.0036F, 0.0F, -3.1416F));
+        PartDefinition LegsInv_r1 = Beetle.addOrReplaceChild("LegsInv_r1", CubeListBuilder.create().texOffs(-10, 0).addBox(-5.0F, 0.0F, -10.0F, 10.0F, 0.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 0.001F, 5.0F, 0.0F, 0.0F, -3.1416F));
 
         return LayerDefinition.create(meshdefinition, 64, 64);
     }
@@ -43,7 +41,7 @@ public class DungBeetleModel<T extends DungBeetleEntity> extends HierarchicalMod
     public void setupAnim(DungBeetleEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
 
-        this.animateWalk(DungBeetleAnimations.ANIM_DUNG_BEETLE_WALK, limbSwing, limbSwingAmount, 2f, 2.5f);
+        this.animateWalk(DungBeetleAnimations.ANIM_DUNG_BEETLE_WALK, limbSwing, limbSwingAmount, 8f, 8f);
         this.animate(entity.idleAnimationState, DungBeetleAnimations.ANIM_DUNG_BEETLE_IDLE, ageInTicks, 1f);
     }
 
