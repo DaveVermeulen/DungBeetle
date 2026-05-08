@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "dungbeetle:block/dung_block"
+    }
+  }
+}
