@@ -1,0 +1,179 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"ANIM_DUNG_BEETLE_IDLE": {
+			"loop": true,
+			"animation_length": 1,
+			"bones": {
+				"Dung": {
+					"rotation": {
+						"vector": ["-query.dungbeetle_dung_rotation", 0, 0]
+					},
+					"scale": {
+						"vector": [1, 1, 1]
+					}
+				},
+				"Beetle": {
+					"rotation": {
+						"vector": [-57.5, 0, 0]
+					},
+					"position": {
+						"vector": [0, 4, 4.5]
+					}
+				}
+			}
+		},
+		"ANIM_DUNG_BEETLE_DEATH": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 0.4583,
+			"bones": {
+				"Dung": {
+					"rotation": {
+						"vector": ["-query.dungbeetle_dung_rotation", 0, 0]
+					},
+					"scale": {
+						"vector": [1, 1, 1]
+					}
+				},
+				"Beetle": {
+					"rotation": {
+						"0.0": {
+							"vector": [-57.5, 0, 0]
+						},
+						"0.3333": {
+							"vector": [-180, 0, 0]
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 4, 4.5]
+						},
+						"0.1667": {
+							"vector": [0, 7.71, 5.82],
+							"easing": "easeOutCirc"
+						},
+						"0.3333": {
+							"vector": [0, 2, 13.5],
+							"easing": "easeInOutQuad"
+						}
+					}
+				}
+			}
+		},
+		"ANIM_DUNG_BEETLE_WALK": {
+			"loop": true,
+			"animation_length": 0.5,
+			"bones": {
+				"Dung": {
+					"rotation": {
+						"vector": ["-query.dungbeetle_dung_rotation", 0, 0]
+					},
+					"scale": {
+						"vector": [1, 1, 1]
+					}
+				},
+				"Beetle": {
+					"rotation": {
+						"0.0": {
+							"vector": [-57.7227, -4.0215, 6.3359]
+						},
+						"0.25": {
+							"vector": [-57.7227, 4.0215, -6.3359],
+							"easing": "easeInOutQuad"
+						},
+						"0.5": {
+							"vector": [-57.7227, -4.0215, 6.3359],
+							"easing": "easeInOutQuad"
+						}
+					},
+					"position": {
+						"vector": [0, 4, 4.5]
+					}
+				}
+			}
+		},
+		"ANIM_DUNG_BEETLE_IDLE_DUNGLESS": {
+			"loop": true,
+			"animation_length": 1,
+			"bones": {
+				"Dung": {
+					"position": {
+						"vector": [0, -3, 0]
+					},
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"Beetle": {
+					"rotation": {
+						"vector": [0, -180, 0]
+					}
+				}
+			}
+		},
+		"ANIM_DUNG_BEETLE_WALK_DUNGLESS": {
+			"loop": true,
+			"animation_length": 0.5,
+			"bones": {
+				"Dung": {
+					"position": {
+						"vector": [0, -3, 0]
+					},
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"Beetle": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, -190, 0]
+						},
+						"0.25": {
+							"vector": [0, -170, 0],
+							"easing": "easeInOutSine"
+						},
+						"0.5": {
+							"vector": [0, -190, 0],
+							"easing": "easeInOutSine"
+						}
+					}
+				}
+			}
+		},
+		"ANIM_DUNG_BEETLE_DEATH_DUNGLESS": {
+			"loop": "hold_on_last_frame",
+			"animation_length": 0.3333,
+			"bones": {
+				"Dung": {
+					"position": {
+						"vector": [0, -3, 0]
+					},
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"Beetle": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, -180, 0]
+						},
+						"0.3333": {
+							"vector": [0, -180, 180],
+							"easing": "easeInElastic"
+						}
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.3333": {
+							"vector": [0, 2, 0],
+							"easing": "easeOutBack",
+							"easingArgs": [4]
+						}
+					}
+				}
+			}
+		}
+	}
+}
