@@ -15,17 +15,7 @@
 				},
 				"Beetle": {
 					"rotation": {
-						"0.0": {
-							"vector": [-57.5247, -1.3429, 2.1089]
-						},
-						"0.5": {
-							"vector": [-57.5247, 1.3429, -2.1089],
-							"easing": "easeInBack"
-						},
-						"1.0": {
-							"vector": [-57.5247, -1.3429, 2.1089],
-							"easing": "easeInBack"
-						}
+						"vector": [-57.5, 0, 0]
 					},
 					"position": {
 						"vector": [0, 4, 4.5]
@@ -116,17 +106,7 @@
 				},
 				"Beetle": {
 					"rotation": {
-						"0.0": {
-							"vector": [0, -182.5, 0]
-						},
-						"0.5": {
-							"vector": [0, -177.5, 0],
-							"easing": "easeInBack"
-						},
-						"1.0": {
-							"vector": [0, -182.5, 0],
-							"easing": "easeInBack"
-						}
+						"vector": [0, -180, 0]
 					}
 				}
 			}
