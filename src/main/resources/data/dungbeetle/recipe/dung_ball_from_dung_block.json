@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "dungbeetle:dung_block"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "dungbeetle:dung_ball"
+  }
+}
