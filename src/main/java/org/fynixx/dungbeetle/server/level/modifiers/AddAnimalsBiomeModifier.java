@@ -17,7 +17,7 @@ public class AddAnimalsBiomeModifier implements BiomeModifier {
     @Override
     public void modify(Holder<Biome> biome, Phase phase, ModifiableBiomeInfo.BiomeInfo.Builder builder) {
         if (phase.equals(Phase.ADD)) {
-            addIfValid(builder, biome, DungBeetleTags.Biomes.HAS_DUNG_BEETLE, DungBeetleTags.Biomes.BLACKLIST_DUNG_BEETLE, MobCategory.CREATURE, ModEntities.DUNG_BEETLE.get(), 10, 2, 3);
+            addIfValid(builder, biome, DungBeetleTags.Biomes.HAS_DUNG_BEETLE, DungBeetleTags.Biomes.BLACKLIST_DUNG_BEETLE, MobCategory.CREATURE, ModEntities.DUNG_BEETLE.get(), 12, 2, 4);
         }
     }
 
