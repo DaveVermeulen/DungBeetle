@@ -83,7 +83,7 @@ public class DungBeetleEntity extends Animal implements Shearable, GeoEntity {
         super.tick();
         if (this.getDeltaMovement().horizontalDistanceSqr() > 1.0E-6) {
             this.dungRotation = (this.dungRotation - ROTATION_SPEED) % -360.0F;
-            System.out.println("dungRotation: " + this.dungRotation);
+//            System.out.println("dungRotation: " + this.dungRotation);
         }
     }
 
