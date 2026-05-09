@@ -35,8 +35,10 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.fynixx.dungbeetle.entity.ModEntities;
 import org.fynixx.dungbeetle.entity.client.DungBeetleRenderer;
+import org.fynixx.dungbeetle.entity.custom.DungBeetleEntity;
 import org.fynixx.dungbeetle.registry.DungBeetleBiomeModifiers;
 import org.slf4j.Logger;
+import software.bernie.geckolib.loading.math.MolangQueries;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Dungbeetle.MODID)
@@ -82,7 +84,8 @@ public class Dungbeetle {
         ModEntities.register(modEventBus);
         DungBeetleBiomeModifiers.BIOME_MODIFIERS.register(modEventBus);
 
-
+        MolangQueries.<DungBeetleEntity>setActorVariable("query.dungbeetle_dung_rotation",
+                actor -> actor.animatable().getDungRotation());
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (Dungbeetle) to respond directly to events.

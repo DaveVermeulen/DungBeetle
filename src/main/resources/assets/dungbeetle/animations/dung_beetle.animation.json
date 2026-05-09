@@ -7,7 +7,7 @@
 			"bones": {
 				"Dung": {
 					"rotation": {
-						"vector": ["-dungRotation", 0, 0]
+						"vector": ["-query.dungbeetle_dung_rotation", 0, 0]
 					},
 					"scale": {
 						"vector": [1, 1, 1]
@@ -39,7 +39,7 @@
 			"bones": {
 				"Dung": {
 					"rotation": {
-						"vector": ["-dungRotation", 0, 0]
+						"vector": ["-query.dungbeetle_dung_rotation", 0, 0]
 					},
 					"scale": {
 						"vector": [1, 1, 1]
@@ -76,7 +76,7 @@
 			"bones": {
 				"Dung": {
 					"rotation": {
-						"vector": ["-dungRotation", 0, 0]
+						"vector": ["-query.dungbeetle_dung_rotation", 0, 0]
 					},
 					"scale": {
 						"vector": [1, 1, 1]

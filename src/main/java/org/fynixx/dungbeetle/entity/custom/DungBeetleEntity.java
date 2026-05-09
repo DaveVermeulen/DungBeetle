@@ -40,6 +40,8 @@ public class DungBeetleEntity extends Animal implements Shearable, GeoEntity {
     private static final byte DUNG_FLAG = 16;
     private static final Logger log = LoggerFactory.getLogger(DungBeetleEntity.class);
     private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
+    private float dungRotation = 0.0F;
+    private static final float ROTATION_SPEED = 5.0F;
 
     public DungBeetleEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
@@ -74,6 +76,19 @@ public class DungBeetleEntity extends Animal implements Shearable, GeoEntity {
         DungBeetleEntity babyEntity = ModEntities.DUNG_BEETLE.get().create(level);
         babyEntity.setDung(false);
         return babyEntity;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.getDeltaMovement().horizontalDistanceSqr() > 1.0E-6) {
+            this.dungRotation = (this.dungRotation - ROTATION_SPEED) % -360.0F;
+            System.out.println("dungRotation: " + this.dungRotation);
+        }
+    }
+
+    public float getDungRotation() {
+        return this.dungRotation;
     }
 
     @Override
@@ -195,7 +210,7 @@ public class DungBeetleEntity extends Animal implements Shearable, GeoEntity {
             this.animals = this.dungBeetle.level().getEntitiesOfClass(
                     Animal.class,
                     this.dungBeetle.getBoundingBox().inflate(5.0D, 5.0D, 5.0D),
-                    e -> e != this.dungBeetle && !e.isBaby()
+                    e -> e != this.dungBeetle && !e.isBaby() && (e.getClass() != DungBeetleEntity.class)
             );
             return !animals.isEmpty() && !this.dungBeetle.hasDung() && this.dungBeetle.getRandom().nextFloat() < 0.1F;
         }
