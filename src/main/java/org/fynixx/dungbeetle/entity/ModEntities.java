@@ -16,7 +16,7 @@ public class ModEntities {
 
     public static final Supplier<EntityType<DungBeetleEntity>> DUNG_BEETLE =
             ENTITY_TYPES.register("dung_beetle", () -> EntityType.Builder.of(DungBeetleEntity::new, MobCategory.CREATURE)
-                    .sized(0.75f, 0.45f).build("dung_beetle"));
+                    .sized(0.65f, 0.45f).build("dung_beetle"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);
