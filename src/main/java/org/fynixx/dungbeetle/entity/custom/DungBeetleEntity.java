@@ -32,6 +32,9 @@ import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.animation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DungBeetleEntity extends Animal implements Shearable, GeoEntity {
     private static final EntityDataAccessor<Byte> DATA_DUNG_ID = SynchedEntityData.defineId(DungBeetleEntity.class, EntityDataSerializers.BYTE);
     private static final byte DUNG_FLAG = 16;
@@ -51,6 +54,7 @@ public class DungBeetleEntity extends Animal implements Shearable, GeoEntity {
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.25));
         this.goalSelector.addGoal(5, new WaterAvoidingRandomStrollGoal(this, 1));
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(7, new FindDungFromAnimalGoal(this));
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -67,7 +71,9 @@ public class DungBeetleEntity extends Animal implements Shearable, GeoEntity {
 
     @Override
     public @Nullable AgeableMob getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
-        return ModEntities.DUNG_BEETLE.get().create(level);
+        DungBeetleEntity babyEntity = ModEntities.DUNG_BEETLE.get().create(level);
+        babyEntity.setDung(false);
+        return babyEntity;
     }
 
     @Override
@@ -103,12 +109,17 @@ public class DungBeetleEntity extends Animal implements Shearable, GeoEntity {
         }
     }
 
+    public void addDungToBeetle() {
+        this.setDung(true);
+        this.level().playSound(null, this, SoundEvents.FROG_LAY_SPAWN, SoundSource.NEUTRAL, 1f, 1f);
+    }
+
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
         if (itemStack.is(Dungbeetle.DUNG_BALL)) {
             if (!this.level().isClientSide && !hasDung()) {
-                setDung(true);
+                addDungToBeetle();
                 itemStack.setCount(itemStack.getCount() - 1);
                 return InteractionResult.SUCCESS;
             } else {
@@ -167,5 +178,63 @@ public class DungBeetleEntity extends Animal implements Shearable, GeoEntity {
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {
         return this.cache;
+    }
+
+    static class FindDungFromAnimalGoal extends Goal {
+        private final DungBeetleEntity dungBeetle;
+        private List<Animal> animals = new ArrayList<>();
+        private Animal nearestAnimal;
+        private int timeToRecalcPath;
+
+        public FindDungFromAnimalGoal(DungBeetleEntity dungBeetle) {
+            this.dungBeetle = dungBeetle;
+        }
+
+        @Override
+        public boolean canUse() {
+            this.animals = this.dungBeetle.level().getEntitiesOfClass(
+                    Animal.class,
+                    this.dungBeetle.getBoundingBox().inflate(5.0D, 5.0D, 5.0D),
+                    e -> e != this.dungBeetle && !e.isBaby()
+            );
+            return !animals.isEmpty() && !this.dungBeetle.hasDung() && this.dungBeetle.getRandom().nextFloat() < 0.1F;
+        }
+
+        @Override
+        public void start() {
+            this.timeToRecalcPath = 0;
+        }
+
+        @Override
+        public void stop() {
+            this.animals.clear();
+        }
+
+        @Override
+        public void tick() {
+            if (--this.timeToRecalcPath <= 0) {
+                this.nearestAnimal = getNearestAnimal();
+                this.timeToRecalcPath = this.adjustedTickDelay(10);
+                this.dungBeetle.getNavigation().moveTo(this.nearestAnimal, 1.5);
+            }
+
+            if(this.dungBeetle.getNavigation().isDone()) {
+                this.dungBeetle.lookAt(this.nearestAnimal, 360, 360);
+                this.dungBeetle.addDungToBeetle();
+            }
+        }
+
+        @Override
+        public boolean requiresUpdateEveryTick() { return true; }
+
+        public Animal getNearestAnimal() {
+            Animal nearestAnimal = animals.getFirst();
+            for (Animal e : this.animals) {
+                if (e.position().distanceTo(this.dungBeetle.position()) <= nearestAnimal.position().distanceTo(this.dungBeetle.position())) {
+                    nearestAnimal = e;
+                }
+            }
+            return nearestAnimal;
+        }
     }
 }
