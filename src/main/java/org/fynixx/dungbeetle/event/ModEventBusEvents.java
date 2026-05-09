@@ -11,10 +11,10 @@ import org.fynixx.dungbeetle.entity.custom.DungBeetleEntity;
 
 @EventBusSubscriber(modid = Dungbeetle.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class ModEventBusEvents {
-    @SubscribeEvent
-    public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(DungBeetleModel.LAYER_LOCATION, DungBeetleModel::createBodyLayer);
-    }
+//    @SubscribeEvent
+//    public static void registerLayers(EntityRenderersEvent.RegisterLayerDefinitions event) {
+//        event.registerLayerDefinition(DungBeetleModel.LAYER_LOCATION, DungBeetleModel::createBodyLayer);
+//    }
 
     @SubscribeEvent
     public static void registerAttributes(EntityAttributeCreationEvent event) {

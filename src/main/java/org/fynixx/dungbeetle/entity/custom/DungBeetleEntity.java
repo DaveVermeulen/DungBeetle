@@ -8,15 +8,17 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
-import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Shearable;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -25,13 +27,16 @@ import org.fynixx.dungbeetle.entity.ModEntities;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.animation.*;
 
-public class DungBeetleEntity extends Animal implements Shearable {
+public class DungBeetleEntity extends Animal implements Shearable, GeoEntity {
     private static final EntityDataAccessor<Byte> DATA_DUNG_ID = SynchedEntityData.defineId(DungBeetleEntity.class, EntityDataSerializers.BYTE);
     private static final byte DUNG_FLAG = 16;
     private static final Logger log = LoggerFactory.getLogger(DungBeetleEntity.class);
-    public final AnimationState idleAnimationState = new AnimationState();
-    private int idleAnimationTimeout = 0;
+    private AnimatableInstanceCache cache = new SingletonAnimatableInstanceCache(this);
 
     public DungBeetleEntity(EntityType<? extends Animal> entityType, Level level) {
         super(entityType, level);
@@ -63,24 +68,6 @@ public class DungBeetleEntity extends Animal implements Shearable {
     @Override
     public @Nullable AgeableMob getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
         return ModEntities.DUNG_BEETLE.get().create(level);
-    }
-
-    private void setupAnimationStates() {
-        if(this.idleAnimationTimeout <= 0) {
-            this.idleAnimationTimeout = 100;
-            this.idleAnimationState.start(this.tickCount);
-        } else {
-            --this.idleAnimationTimeout;
-        }
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
-
-        if(this.level().isClientSide()) {
-            this.setupAnimationStates();
-        }
     }
 
     @Override
@@ -117,11 +104,18 @@ public class DungBeetleEntity extends Animal implements Shearable {
     }
 
     @Override
-    public void shear(SoundSource soundSource) {
-        this.level().playSound(null, this, SoundEvents.BOGGED_SHEAR, soundSource, 1.0F, 1.0F);
-        if (!this.level().isClientSide()) {
-            this.setDung(false);
-            this.spawnAtLocation(new ItemStack(Dungbeetle.DUNG_BALL.get()), this.getEyeHeight());
+    public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        ItemStack itemStack = player.getItemInHand(hand);
+        if (itemStack.is(Dungbeetle.DUNG_BALL)) {
+            if (!this.level().isClientSide && !hasDung()) {
+                setDung(true);
+                itemStack.setCount(itemStack.getCount() - 1);
+                return InteractionResult.SUCCESS;
+            } else {
+                return InteractionResult.CONSUME;
+            }
+        } else {
+            return super.mobInteract(player, hand);
         }
     }
 
@@ -131,9 +125,18 @@ public class DungBeetleEntity extends Animal implements Shearable {
     }
 
     @Override
-    protected @Nullable SoundEvent getAmbientSound() {
-        return SoundEvents.GRASS_STEP;
+    public void shear(SoundSource soundSource) {
+        this.level().playSound(null, this, SoundEvents.BOGGED_SHEAR, soundSource, 1.0F, 1.0F);
+        if (!this.level().isClientSide()) {
+            this.setDung(false);
+            this.spawnAtLocation(new ItemStack(Dungbeetle.DUNG_BALL.get()), this.getEyeHeight());
+        }
     }
+
+//    @Override
+//    protected @Nullable SoundEvent getAmbientSound() {
+//        return SoundEvents.GRASS_STEP;
+//    }
 
     @Override
     protected @Nullable SoundEvent getHurtSound(DamageSource damageSource) {
@@ -143,5 +146,26 @@ public class DungBeetleEntity extends Animal implements Shearable {
     @Override
     protected @Nullable SoundEvent getDeathSound() {
         return SoundEvents.HONEY_BLOCK_BREAK;
+    }
+
+    public String animationType() {return hasDung() ? "" : "_DUNGLESS";}
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "controller", 0, this::predicate));
+    }
+
+    private PlayState predicate(software.bernie.geckolib.animation.AnimationState<DungBeetleEntity> dungBeetleEntityAnimationState) {
+        if(this.getDeltaMovement().horizontalDistanceSqr() > 1.0E-6) {
+                dungBeetleEntityAnimationState.getController().setAnimation(RawAnimation.begin().thenLoop(("ANIM_DUNG_BEETLE_WALK" + animationType())));
+        } else {
+            dungBeetleEntityAnimationState.getController().setAnimation(RawAnimation.begin().thenLoop(("ANIM_DUNG_BEETLE_IDLE" + animationType())));
+        }
+        return PlayState.CONTINUE;
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.cache;
     }
 }
