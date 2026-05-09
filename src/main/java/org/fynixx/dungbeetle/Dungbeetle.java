@@ -61,7 +61,9 @@ public class Dungbeetle {
     public static final DeferredBlock<Block> DUNG_BLOCK = BLOCKS.registerSimpleBlock("dung_block", BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.HONEY_BLOCK));
     public static final DeferredItem<BlockItem> DUNG_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("dung_block", DUNG_BLOCK);
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> DUNG_TAB = CREATIVE_MODE_TABS.register("dung_tab", () -> CreativeModeTab.builder().title(Component.translatable("itemGroup.dungbeetle")).withTabsBefore(CreativeModeTabs.COMBAT).icon(() -> DUNG_BLOCK_ITEM.get().getDefaultInstance()).displayItems((parameters, output) -> {
+    public static final DeferredItem<Item> CREATIVE_ICON = ITEMS.registerSimpleItem("creative_icon");
+
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> DUNG_TAB = CREATIVE_MODE_TABS.register("dung_tab", () -> CreativeModeTab.builder().title(Component.translatable("itemGroup.dungbeetle")).withTabsBefore(CreativeModeTabs.COMBAT).icon(() -> CREATIVE_ICON.get().getDefaultInstance()).displayItems((parameters, output) -> {
         output.accept(DUNG_BALL.get());
         output.accept(DUNG_BLOCK_ITEM.get());
         output.accept(DUNG_BEETLE_SPAWN_EGG.get());
