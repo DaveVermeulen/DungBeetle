@@ -9,11 +9,11 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.common.DeferredSpawnEggItem;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import org.fynixx.dungbeetle.Dungbeetle;
+import org.fynixx.dungbeetle.DungBeetle;
 import org.fynixx.dungbeetle.entity.ModEntities;
 
 public class DungBeetleItems {
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Dungbeetle.MODID);
+    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(DungBeetle.MODID);
 
     public static final DeferredItem<Item> DUNG_BALL = ITEMS.register("dung_ball",
                     () -> new BoneMealItem(new Item.Properties().food(new FoodProperties.Builder()

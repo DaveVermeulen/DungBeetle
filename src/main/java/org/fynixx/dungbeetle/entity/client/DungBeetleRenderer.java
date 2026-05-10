@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import org.fynixx.dungbeetle.Dungbeetle;
+import org.fynixx.dungbeetle.DungBeetle;
 import org.fynixx.dungbeetle.entity.custom.DungBeetleEntity;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
@@ -15,7 +15,7 @@ public class DungBeetleRenderer extends GeoEntityRenderer<DungBeetleEntity> {
 
     @Override
     public ResourceLocation getTextureLocation(DungBeetleEntity animatable) {
-        return ResourceLocation.fromNamespaceAndPath(Dungbeetle.MODID, "textures/entity/dung_beetle/dung_beetle.png");
+        return ResourceLocation.fromNamespaceAndPath(DungBeetle.MODID, "textures/entity/dung_beetle/dung_beetle.png");
     }
 
     @Override

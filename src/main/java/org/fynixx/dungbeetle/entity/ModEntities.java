@@ -5,14 +5,14 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import org.fynixx.dungbeetle.Dungbeetle;
+import org.fynixx.dungbeetle.DungBeetle;
 import org.fynixx.dungbeetle.entity.custom.DungBeetleEntity;
 
 import java.util.function.Supplier;
 
 public class ModEntities {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
-            DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, Dungbeetle.MODID);
+            DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, DungBeetle.MODID);
 
     public static final Supplier<EntityType<DungBeetleEntity>> DUNG_BEETLE =
             ENTITY_TYPES.register("dung_beetle", () -> EntityType.Builder.of(DungBeetleEntity::new, MobCategory.CREATURE)

@@ -8,13 +8,13 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import org.fynixx.dungbeetle.Dungbeetle;
+import org.fynixx.dungbeetle.DungBeetle;
 import org.fynixx.dungbeetle.item.DungBeetleItems;
 
 import java.util.function.Supplier;
 
 public class DungBeetleBlocks {
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Dungbeetle.MODID);
+    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(DungBeetle.MODID);
 
     public static final DeferredBlock<Block> DUNG_BLOCK = registerBlock("dung_block",
             () -> new Block(BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.HONEY_BLOCK)));

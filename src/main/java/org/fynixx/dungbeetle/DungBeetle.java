@@ -35,8 +35,8 @@ import org.slf4j.Logger;
 import software.bernie.geckolib.loading.math.MolangQueries;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
-@Mod(Dungbeetle.MODID)
-public class Dungbeetle {
+@Mod(DungBeetle.MODID)
+public class DungBeetle {
     public static final String MODID = "dungbeetle";
     private static final Logger LOGGER = LogUtils.getLogger();
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
@@ -56,7 +56,7 @@ public class Dungbeetle {
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
     // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
-    public Dungbeetle(IEventBus modEventBus, ModContainer modContainer) {
+    public DungBeetle(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::registerSpawnPlacements);
