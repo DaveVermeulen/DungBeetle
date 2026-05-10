@@ -24,6 +24,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.fynixx.dungbeetle.Dungbeetle;
 import org.fynixx.dungbeetle.entity.ModEntities;
+import org.fynixx.dungbeetle.sound.DungBeetleSounds;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -159,19 +160,19 @@ public class DungBeetleEntity extends Animal implements Shearable, GeoEntity {
         }
     }
 
-//    @Override
-//    protected @Nullable SoundEvent getAmbientSound() {
-//        return SoundEvents.GRASS_STEP;
-//    }
+    @Override
+    protected @Nullable SoundEvent getAmbientSound() {
+        return DungBeetleSounds.DUNG_BEETLE_IDLE.get();
+    }
 
     @Override
     protected @Nullable SoundEvent getHurtSound(DamageSource damageSource) {
-        return SoundEvents.HONEY_BLOCK_STEP;
+        return SoundEvents.BEE_HURT;
     }
 
     @Override
     protected @Nullable SoundEvent getDeathSound() {
-        return SoundEvents.HONEY_BLOCK_BREAK;
+        return SoundEvents.BEE_DEATH;
     }
 
     public String animationType() {return hasDung() ? "" : "_DUNGLESS";}

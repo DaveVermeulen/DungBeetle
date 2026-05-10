@@ -3,5 +3,7 @@
   "block.dungbeetle.dung_block": "Block of Dung",
   "item.dungbeetle.dung_ball": "Dung Ball",
   "item.dungbeetle.dung_beetle_spawn_egg": "Dung Beetle Spawn Egg",
-  "entity.dungbeetle.dung_beetle": "Dung Beetle"
+  "entity.dungbeetle.dung_beetle": "Dung Beetle",
+
+  "sounds.dungbeetle.dung_beetle_idle": "Dung Beetle Chirps"
 }

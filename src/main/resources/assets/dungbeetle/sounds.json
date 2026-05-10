@@ -1,0 +1,8 @@
+{
+  "dung_beetle_idle": {
+    "subtitle": "sounds.dungbeetle.dung_beetle_idle",
+    "sounds": [
+      "dungbeetle:dung_beetle_idle"
+    ]
+  }
+}

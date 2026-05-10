@@ -37,6 +37,7 @@ import org.fynixx.dungbeetle.entity.ModEntities;
 import org.fynixx.dungbeetle.entity.client.DungBeetleRenderer;
 import org.fynixx.dungbeetle.entity.custom.DungBeetleEntity;
 import org.fynixx.dungbeetle.registry.DungBeetleBiomeModifiers;
+import org.fynixx.dungbeetle.sound.DungBeetleSounds;
 import org.slf4j.Logger;
 import software.bernie.geckolib.loading.math.MolangQueries;
 
@@ -84,6 +85,8 @@ public class Dungbeetle {
         CREATIVE_MODE_TABS.register(modEventBus);
 
         ModEntities.register(modEventBus);
+        DungBeetleSounds.register(modEventBus);
+
         DungBeetleBiomeModifiers.BIOME_MODIFIERS.register(modEventBus);
 
         MolangQueries.<DungBeetleEntity>setActorVariable("query.dungbeetle_dung_rotation",
