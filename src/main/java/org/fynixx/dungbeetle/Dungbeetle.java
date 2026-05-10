@@ -41,10 +41,17 @@ public class Dungbeetle {
     private static final Logger LOGGER = LogUtils.getLogger();
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> DUNG_TAB = CREATIVE_MODE_TABS.register("dung_tab", () -> CreativeModeTab.builder().title(Component.translatable("itemGroup.dungbeetle")).withTabsBefore(CreativeModeTabs.COMBAT).icon(() -> DungBeetleItems.CREATIVE_ICON.get().getDefaultInstance()).displayItems((parameters, output) -> {
-        output.accept(DungBeetleItems.DUNG_BALL);
-        output.accept(DungBeetleBlocks.DUNG_BLOCK);
-        output.accept(DungBeetleItems.DUNG_BEETLE_SPAWN_EGG);
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> DUNG_TAB = CREATIVE_MODE_TABS.register("dung_tab",
+            () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.dungbeetle"))
+                    .withTabsBefore(CreativeModeTabs.COMBAT)
+                    .icon(() -> DungBeetleItems.CREATIVE_ICON.get().getDefaultInstance())
+                    .displayItems((parameters, output) -> {
+
+                        output.accept(DungBeetleItems.DUNG_BALL);
+                        output.accept(DungBeetleBlocks.DUNG_BLOCK);
+                        output.accept(DungBeetleItems.DUNG_BEETLE_SPAWN_EGG);
+
     }).build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
