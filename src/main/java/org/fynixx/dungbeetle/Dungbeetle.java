@@ -33,9 +33,11 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.fynixx.dungbeetle.block.DungBeetleBlocks;
 import org.fynixx.dungbeetle.entity.ModEntities;
 import org.fynixx.dungbeetle.entity.client.DungBeetleRenderer;
 import org.fynixx.dungbeetle.entity.custom.DungBeetleEntity;
+import org.fynixx.dungbeetle.item.DungBeetleItems;
 import org.fynixx.dungbeetle.registry.DungBeetleBiomeModifiers;
 import org.fynixx.dungbeetle.sound.DungBeetleSounds;
 import org.slf4j.Logger;
@@ -46,28 +48,12 @@ import software.bernie.geckolib.loading.math.MolangQueries;
 public class Dungbeetle {
     public static final String MODID = "dungbeetle";
     private static final Logger LOGGER = LogUtils.getLogger();
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(MODID);
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(MODID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MODID);
 
-    public static final DeferredItem<Item> DUNG_BALL = ITEMS.registerSimpleItem("dung_ball", new Item.Properties().food(new FoodProperties.Builder().alwaysEdible().nutrition(1)
-            .effect(new MobEffectInstance(MobEffects.HUNGER, 240, 1, false, true, true), 1f)
-            .effect(new MobEffectInstance(MobEffects.POISON, 120, 1, false, true, true), 1f)
-            .build()));
-
-    public static final DeferredItem<Item> DUNG_BEETLE_SPAWN_EGG = ITEMS.register("dung_beetle_spawn_egg",
-            () -> new DeferredSpawnEggItem(ModEntities.DUNG_BEETLE, 0xffffff, 0xffffff,
-                    new Item.Properties()));
-
-    public static final DeferredBlock<Block> DUNG_BLOCK = BLOCKS.registerSimpleBlock("dung_block", BlockBehaviour.Properties.of().strength(0.5F).sound(SoundType.HONEY_BLOCK));
-    public static final DeferredItem<BlockItem> DUNG_BLOCK_ITEM = ITEMS.registerSimpleBlockItem("dung_block", DUNG_BLOCK);
-
-    public static final DeferredItem<Item> CREATIVE_ICON = ITEMS.registerSimpleItem("creative_icon");
-
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> DUNG_TAB = CREATIVE_MODE_TABS.register("dung_tab", () -> CreativeModeTab.builder().title(Component.translatable("itemGroup.dungbeetle")).withTabsBefore(CreativeModeTabs.COMBAT).icon(() -> CREATIVE_ICON.get().getDefaultInstance()).displayItems((parameters, output) -> {
-        output.accept(DUNG_BALL.get());
-        output.accept(DUNG_BLOCK_ITEM.get());
-        output.accept(DUNG_BEETLE_SPAWN_EGG.get());
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> DUNG_TAB = CREATIVE_MODE_TABS.register("dung_tab", () -> CreativeModeTab.builder().title(Component.translatable("itemGroup.dungbeetle")).withTabsBefore(CreativeModeTabs.COMBAT).icon(() -> DungBeetleItems.CREATIVE_ICON.get().getDefaultInstance()).displayItems((parameters, output) -> {
+        output.accept(DungBeetleItems.DUNG_BALL);
+        output.accept(DungBeetleBlocks.DUNG_BLOCK);
+        output.accept(DungBeetleItems.DUNG_BEETLE_SPAWN_EGG);
     }).build());
 
     // The constructor for the mod class is the first code that is run when your mod is loaded.
@@ -77,11 +63,8 @@ public class Dungbeetle {
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::registerSpawnPlacements);
 
-        // Register the Deferred Register to the mod event bus so blocks get registered
-        BLOCKS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so items get registered
-        ITEMS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so tabs get registered
+        DungBeetleBlocks.register(modEventBus);
+        DungBeetleItems.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
 
         ModEntities.register(modEventBus);

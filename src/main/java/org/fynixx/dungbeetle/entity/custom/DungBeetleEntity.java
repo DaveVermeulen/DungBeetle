@@ -24,6 +24,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.fynixx.dungbeetle.Dungbeetle;
 import org.fynixx.dungbeetle.entity.ModEntities;
+import org.fynixx.dungbeetle.item.DungBeetleItems;
 import org.fynixx.dungbeetle.sound.DungBeetleSounds;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -133,7 +134,7 @@ public class DungBeetleEntity extends Animal implements Shearable, GeoEntity {
     @Override
     public InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
-        if (itemStack.is(Dungbeetle.DUNG_BALL)) {
+        if (itemStack.is(DungBeetleItems.DUNG_BALL.get())) {
             if (!this.level().isClientSide && !hasDung()) {
                 addDungToBeetle();
                 itemStack.setCount(itemStack.getCount() - 1);
@@ -156,7 +157,7 @@ public class DungBeetleEntity extends Animal implements Shearable, GeoEntity {
         this.level().playSound(null, this, SoundEvents.BOGGED_SHEAR, soundSource, 1.0F, 1.0F);
         if (!this.level().isClientSide()) {
             this.setDung(false);
-            this.spawnAtLocation(new ItemStack(Dungbeetle.DUNG_BALL.get()), this.getEyeHeight());
+            this.spawnAtLocation(new ItemStack(DungBeetleItems.DUNG_BALL.get()), this.getEyeHeight());
         }
     }
 
